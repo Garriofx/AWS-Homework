@@ -98,6 +98,19 @@ def recommend_portfolio(intent_request):
         # for the first violation detected.
 
         ### YOUR DATA VALIDATION CODE STARTS HERE ###
+        if age < 21: 
+            return build_validation_result(False,
+                                            'age',
+                                            'I am sorry, but you should be at least 21 to use this service.')
+        elif age > 100: 
+            return build_validation_result(False,
+                                            'age',
+                                            'I am sorry, but you should not invest at this age unless it is for someone else. If so, please enter his/her age.')
+        elif investment_amount < 5000: 
+            return build_validation_result(False,
+                                            'investmentAmount',
+                                            'I am sorry, but you need to deposit at least $5,000 to use this service. Please deposit that amount if possible.')
+
 
         ### YOUR DATA VALIDATION CODE ENDS HERE ###
 
@@ -109,6 +122,18 @@ def recommend_portfolio(intent_request):
     # Get the initial investment recommendation
 
     ### YOUR FINAL INVESTMENT RECOMMENDATION CODE STARTS HERE ###
+if risk_level == 'None':
+        response = 'Portfolio: 100% bonds (AGG), 0% equity (SPY)'
+    elif risk_level == 'Minimum' and age > 55:
+        response == 'Portfolio: 80% bonds (AGG), 20% equity (SPY)'
+    elif risk_level == 'Minimum' and age < 55:
+        response == 'Portfolio: 60% bonds (AGG), 40% equity (SPY)'
+    elif risk_level == 'Moderate' and age < 35:
+        response = 'Portfolio: 40% bonds (AGG), 60% equity (SPY)'
+    elif risk_level == 'Maximum' and age > 35:
+        response = 'Portfolio: 80% bonds (AGG), 20% equity (SPY)'
+    elif risk_level == 'Maximum' and age < 34:
+        response = 'Portfolio: 0% bonds (AGG), 100% equity (SPY)'
 
     ### YOUR FINAL INVESTMENT RECOMMENDATION CODE ENDS HERE ###
 
@@ -150,3 +175,4 @@ def lambda_handler(event, context):
     """
 
     return dispatch(event)
+    
